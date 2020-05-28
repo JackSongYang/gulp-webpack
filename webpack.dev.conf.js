@@ -45,8 +45,8 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              esModule: true,
-            },
+              esModule: true
+            }
           },
           {
             loader: 'css-loader',
@@ -59,8 +59,10 @@ module.exports = {
             loader: 'postcss-loader',
             options:{
               plugins: (loader) =>  [
-                require('postcss-import')({ root: loader.resourcePath }),
-                require('postcss-cssnext')(),
+                require('postcss-import')({
+                  root: loader.resourcePath
+                }),
+                require('postcss-preset-env')(),
                 require('cssnano')()
               ],
               sourceMap: true
@@ -76,8 +78,8 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              esModule: true,
-            },
+              esModule: true
+            }
           },
           {
             loader: 'css-loader',
@@ -90,8 +92,10 @@ module.exports = {
             loader: 'postcss-loader',
             options:{
               plugins: (loader) =>  [
-                require('postcss-import')({ root: loader.resourcePath }),
-                require('postcss-cssnext')(),
+                require('postcss-import')({
+                  root: loader.resourcePath
+                }),
+                require('postcss-preset-env')(),
                 require('cssnano')()
               ],
               sourceMap: true
@@ -113,8 +117,8 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              esModule: true,
-            },
+              esModule: true
+            }
           },
           {
             loader: 'css-loader',
@@ -127,8 +131,10 @@ module.exports = {
             loader: 'postcss-loader',
             options:{
               plugins: (loader) =>  [
-                require('postcss-import')({ root: loader.resourcePath }),
-                require('postcss-cssnext')(),
+                require('postcss-import')({
+                  root: loader.resourcePath
+                }),
+                require('postcss-preset-env')(),
                 require('cssnano')()
               ],
               sourceMap: true
@@ -176,8 +182,8 @@ module.exports = {
             limit: 8192, 
             name: 'fonts/[name].[ext]?[hash:8]',
             publicPath:'./'
-          },
-        }],
+          }
+        }]
       },
       {
         // 文件依赖配置项——音频
@@ -188,8 +194,8 @@ module.exports = {
             limit: 8192, 
             name: 'audios/[name].[ext]?[hash:8]',
             publicPath:'./'
-          },
-        }],
+          }
+        }]
       },
       {
         // 文件依赖配置项——视频
@@ -200,8 +206,8 @@ module.exports = {
             limit: 8192, 
             name: 'videos/[name].[ext]?[hash:8]',
             publicPath:'./'
-          },
-        }],
+          }
+        }]
       },
       {
         test: /\.(html)?$/,

@@ -22,7 +22,9 @@
 
 <style lang="scss" scoped>
   h1 {
+    font-size: 0.6rem;
     span {
+      font-size: 0.6rem;
       color: red;
     }
   }

@@ -49,8 +49,8 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              esModule: true,
-            },
+              esModule: true
+            }
           },
           {
             loader: 'css-loader',
@@ -63,7 +63,7 @@ module.exports = {
             options:{
               plugins: (loader) =>  [
                 require('postcss-import')({ root: loader.resourcePath }),
-                require('postcss-cssnext')(),
+                require('postcss-preset-env')(),
                 require('cssnano')()
               ]
             }
@@ -78,8 +78,8 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              esModule: true,
-            },
+              esModule: true
+            }
           },
           {
             loader: 'css-loader',
@@ -92,7 +92,7 @@ module.exports = {
             options:{
               plugins: (loader) =>  [
                 require('postcss-import')({ root: loader.resourcePath }),
-                require('postcss-cssnext')(),
+                require('postcss-preset-env')(),
                 require('cssnano')()
               ]
             }
@@ -108,8 +108,8 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              esModule: true,
-            },
+              esModule: true
+            }
           },
           {
             loader: 'css-loader',
@@ -122,7 +122,7 @@ module.exports = {
             options:{
               plugins: (loader) =>  [
                 require('postcss-import')({ root: loader.resourcePath }),
-                require('postcss-cssnext')(),
+                require('postcss-preset-env')(),
                 require('cssnano')()
               ]
             }
@@ -162,14 +162,14 @@ module.exports = {
               },
               // optipng.enabled: false will disable optipng
               optipng: {
-                enabled: false,
+                enabled: false
               },
               pngquant: {
                 quality: [0.65, 0.90],
                 speed: 4
               },
               gifsicle: {
-                interlaced: false,
+                interlaced: false
               },
               // the webp option will enable WEBP
               webp: {
@@ -189,8 +189,8 @@ module.exports = {
             limit: 8192, 
             name: 'fonts/[name].[ext]?[hash:8]',
             publicPath:'./'
-          },
-        }],
+          }
+        }]
       },
       {
         // 文件依赖配置项——音频
@@ -201,8 +201,8 @@ module.exports = {
             limit: 8192, 
             name: 'audios/[name].[ext]?[hash:8]',
             publicPath:'./'
-          },
-        }],
+          }
+        }]
       },
       {
         // 文件依赖配置项——视频
@@ -213,8 +213,8 @@ module.exports = {
             limit: 8192, 
             name: 'videos/[name].[ext]?[hash:8]',
             publicPath:'./'
-          },
-        }],
+          }
+        }]
       },
       {
         test: /\.(html)?$/,
