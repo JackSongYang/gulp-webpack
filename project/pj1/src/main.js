@@ -1,6 +1,7 @@
 import Vue from 'vue'
-import demo from '../components/demo.vue'
-import '../css/index.scss'
+import demo from '../components/demo'
+import '../css/index'
+import _ from 'lodash'
 
 let vm = new Vue({
   el: '#app',
@@ -10,5 +11,6 @@ let vm = new Vue({
   mounted () {
     console.log('success')
     console.log($('body'))
+    console.log(_.trim(' 123123 '))
   }
 })

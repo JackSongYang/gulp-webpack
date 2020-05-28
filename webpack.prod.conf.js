@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const lodashWebpackPlugin = require('lodash-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -26,12 +27,14 @@ module.exports = {
       meta: false
     }),
     new VueLoaderPlugin(),
-    new MiniCssExtractPlugin()
+    new MiniCssExtractPlugin(),
+    new lodashWebpackPlugin()
   ],
   externals: {
     jquery: 'jQuery'
   },
   resolve: {
+    extensions: ['.vue', '.js', '.scss', '.sass', '.less', '.css', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.min.js'
     }
@@ -150,6 +153,31 @@ module.exports = {
               publicPath:'./'
             }
           },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              mozjpeg: {
+                progressive: true,
+                quality: 65
+              },
+              // optipng.enabled: false will disable optipng
+              optipng: {
+                enabled: false,
+              },
+              pngquant: {
+                quality: [0.65, 0.90],
+                speed: 4
+              },
+              gifsicle: {
+                interlaced: false,
+              },
+              // the webp option will enable WEBP
+              webp: {
+                quality: 75
+              },
+              disable: false
+            }
+          }
         ]
       },
       {

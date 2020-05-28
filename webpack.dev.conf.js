@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+const lodashWebpackPlugin = require('lodash-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -21,12 +22,14 @@ module.exports = {
     }),
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin(),
-    new FriendlyErrorsPlugin()
+    new FriendlyErrorsPlugin(),
+    new lodashWebpackPlugin()
   ],
   externals: {
     jquery: 'jQuery'
   },
   resolve: {
+    extensions: ['.vue', '.js', '.scss', '.sass', '.less', '.css', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.js'
     }
@@ -161,7 +164,7 @@ module.exports = {
               name:'images/[name].[hash:8].[ext]',
               publicPath:'./'
             }
-          },
+          }
         ]
       },
       {

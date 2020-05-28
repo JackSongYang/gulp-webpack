@@ -20,6 +20,7 @@
       "@babel/plugin-transform-object-assign",
       ["@babel/plugin-proposal-decorators", { "legacy": true }],
       "@babel/plugin-proposal-class-properties",
-      "dynamic-import-webpack"
+      "dynamic-import-webpack",
+      "lodash"
     ]
 }
