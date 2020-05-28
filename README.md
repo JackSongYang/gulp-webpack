@@ -1,6 +1,3 @@
-### infomation
-The company's intranet git repository.
-
 ### environment
 node.js ^v12.16.3  
 gulp-cli -g ^v2.2.1  
