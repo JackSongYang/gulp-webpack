@@ -1,4 +1,6 @@
-const gulp = require('gulp');
+const path = require('path');
+// const gulp = require('gulp');
+const { src, dest } = require('gulp');
 const webpack = require('webpack-stream');
 
 /**
@@ -7,21 +9,20 @@ const webpack = require('webpack-stream');
  * @param {String} main 指定其他入口js文件
  */
 function webpackEntryOption (src, isProd, main) {
-  let config = isProd?require('./webpack.prod.conf.js'):require('./webpack.dev.conf.js');
-  config.entry = `${src}src/${main?main:'main'}.js`;
-  // config.plugins[0].outputPath = path.resolve(__dirname, src + 'dist');
+  const config = isProd ? require('./webpack.prod.conf.js') : require('./webpack.dev.conf.js');
+  config.entry = `${src}src/${main || 'main'}.js`;
+  config.output.path = path.resolve(__dirname, src + 'dist');
   config.plugins[0].options.template = `${src}index.html`;
-  // console.log(config)
-  return config
+  return config;
 }
 
-gulp.task('dev_default_project', function () {
-	return gulp.src('**/*.js', {allowEmpty: true})
-			.pipe(webpack(webpackEntryOption('./project/pj1/')))
-			.pipe(gulp.dest('./project/pj1/dist/'));
-});
-gulp.task('prod_default_project', function () {
-	return gulp.src('**/*.js', {allowEmpty: true})
-			.pipe(webpack(webpackEntryOption('./project/pj1/', true)))
-			.pipe(gulp.dest('./project/pj1/dist/'));
-});
+exports.devDefaultProject = function () {
+  return src('**/*.js', { allowEmpty: true })
+    .pipe(webpack(webpackEntryOption('./project/pj1/')))
+    .pipe(dest('./project/pj1/dist/'));
+};
+exports.prodDefaultProject = function () {
+  return src('**/*.js', { allowEmpty: true })
+    .pipe(webpack(webpackEntryOption('./project/pj1/', true)))
+    .pipe(dest('./project/pj1/dist/'));
+};

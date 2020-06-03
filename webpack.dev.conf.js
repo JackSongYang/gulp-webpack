@@ -1,47 +1,74 @@
-// const path = require('path');
-// const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-const lodashWebpackPlugin = require('lodash-webpack-plugin');
+// const path = require("path");
+// const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const VueLoaderPlugin = require("vue-loader/lib/plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
+const LodashWebpackPlugin = require("lodash-webpack-plugin");
+const notifier = require("node-notifier");
+const InsertHtmlPlugin = require("./public/insert-html-code-plugin");
 
 module.exports = {
-  mode: 'development',
-  // entry: './testSelf/0303column/js/main.js',
+  mode: "development",
+  // entry: "./testSelf/0303column/js/main.js",
   output: {
-    filename: 'build.js',
-    // path:path.resolve(__dirname,'dist')
+    filename: "build.js",
+    globalObject: "this"
+    // path:path.resolve(__dirname,"dist")
   },
   plugins: [
-    // new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       hash: true,
       meta: false
     }),
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin(),
-    new FriendlyErrorsPlugin(),
-    new lodashWebpackPlugin()
+    new LodashWebpackPlugin(),
+    new FriendlyErrorsPlugin({
+      //  运行错误
+      onErrors: function (severity, errors) {
+        // 可以收听插件转换和优先级的错误
+        // 严重性可以是"错误"或"警告"
+        if (severity !== "error") {
+          return;
+        }
+        const error = errors[0];
+        notifier.notify({
+          title: "Webpack error",
+          message: severity + ": " + error.name,
+          subtitle: error.file || ""
+          // icon: ICON
+        });
+      },
+      // 是否每次编译之间清除控制台
+      // 默认为true
+      clearConsole: true
+    }),
+    new InsertHtmlPlugin({
+      minimize: false,
+      scriptCode: `<script>console.log(window)</script>`,
+      scriptPaths: ['https://code.jquery.com/jquery-1.12.4.min.js']
+    }),
+    new CleanWebpackPlugin()
   ],
   externals: {
-    jquery: 'jQuery'
+    jquery: "jQuery"
   },
   resolve: {
-    extensions: ['.vue', '.js', '.scss', '.sass', '.less', '.css', '.json'],
+    extensions: [".vue", ".js", ".scss", ".sass", ".less", ".css", ".json"],
     alias: {
-      'vue$': 'vue/dist/vue.js'
+      vue$: "vue/dist/vue.js"
     }
   },
-  devtool: 'inline-source-map',
+  devtool: "inline-source-map",
   module: {
     rules: [
       {
         test: /\.css$/,
         use: [
-          'vue-style-loader',
-          'style-loader',
+          "vue-style-loader",
+          "style-loader",
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
@@ -49,21 +76,21 @@ module.exports = {
             }
           },
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               sourceMap: true,
               importLoaders: 1
             }
           },
           {
-            loader: 'postcss-loader',
-            options:{
-              plugins: (loader) =>  [
-                require('postcss-import')({
+            loader: "postcss-loader",
+            options: {
+              plugins: (loader) => [
+                require("postcss-import")({
                   root: loader.resourcePath
                 }),
-                require('postcss-preset-env')(),
-                require('cssnano')()
+                require("postcss-preset-env")(),
+                require("cssnano")()
               ],
               sourceMap: true
             }
@@ -73,8 +100,8 @@ module.exports = {
       {
         test: /\.(sass|scss)$/,
         use: [
-          'vue-style-loader',
-          'style-loader',
+          "vue-style-loader",
+          "style-loader",
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
@@ -82,27 +109,27 @@ module.exports = {
             }
           },
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               sourceMap: true,
               importLoaders: 2
             }
           },
           {
-            loader: 'postcss-loader',
-            options:{
-              plugins: (loader) =>  [
-                require('postcss-import')({
+            loader: "postcss-loader",
+            options: {
+              plugins: (loader) => [
+                require("postcss-import")({
                   root: loader.resourcePath
                 }),
-                require('postcss-preset-env')(),
-                require('cssnano')()
+                require("postcss-preset-env")(),
+                require("cssnano")()
               ],
               sourceMap: true
             }
           },
           {
-            loader: 'sass-loader',
+            loader: "sass-loader",
             options: {
               sourceMap: true
             }
@@ -112,8 +139,8 @@ module.exports = {
       {
         test: /\.less$/,
         use: [
-          'vue-style-loader',
-          'style-loader',
+          "vue-style-loader",
+          "style-loader",
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
@@ -121,27 +148,27 @@ module.exports = {
             }
           },
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               sourceMap: true,
               importLoaders: 2
             }
           },
           {
-            loader: 'postcss-loader',
-            options:{
-              plugins: (loader) =>  [
-                require('postcss-import')({
+            loader: "postcss-loader",
+            options: {
+              plugins: (loader) => [
+                require("postcss-import")({
                   root: loader.resourcePath
                 }),
-                require('postcss-preset-env')(),
-                require('cssnano')()
+                require("postcss-preset-env")(),
+                require("cssnano")()
               ],
               sourceMap: true
             }
           },
           {
-            loader: 'less-loader',
+            loader: "less-loader",
             options: {
               sourceMap: true
             }
@@ -150,11 +177,24 @@ module.exports = {
       },
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: "vue-loader"
       },
       {
-        test: /\.js?$/,
-        loader: 'babel-loader',
+        test: /\.js$/,
+        use: [{
+          loader: "eslint-loader",
+          options: { // 这里的配置项参数将会被传递到 eslint 的 CLIEngine
+            formatter: require("eslint-friendly-formatter") // 指定错误报告的格式规范
+          }
+        }],
+        enforce: "pre", // 编译前检查
+        exclude: [/node_modules/] // 不检测的文件
+        // include: [path.resolve(__dirname, "src")], // 指定检查的目录
+      },
+      {
+        // test: /\.js?$/,
+        test: /\.(js|jsx)$/,
+        loader: "babel-loader",
         exclude: file => (
           /node_modules/.test(file) &&
           !/\.vue\.js/.test(file)
@@ -164,11 +204,11 @@ module.exports = {
         test: /\.(png|jp?g|gif|svg|ico)$/,
         use: [
           {
-            loader: 'url-loader',
+            loader: "url-loader",
             options: {
               limit: 8192, // 小于8192字节的图片打包成base 64图片
-              name:'images/[name].[hash:8].[ext]',
-              publicPath:'./'
+              name: "images/[name].[hash:8].[ext]",
+              publicPath: "./"
             }
           }
         ]
@@ -177,11 +217,11 @@ module.exports = {
         // 文件依赖配置项——字体图标
         test: /\.(woff|woff2|svg|eot|ttf)$/,
         use: [{
-          loader: 'file-loader',
+          loader: "file-loader",
           options: {
-            limit: 8192, 
-            name: 'fonts/[name].[ext]?[hash:8]',
-            publicPath:'./'
+            limit: 8192,
+            name: "fonts/[name].[ext]?[hash:8]",
+            publicPath: "./"
           }
         }]
       },
@@ -189,11 +229,11 @@ module.exports = {
         // 文件依赖配置项——音频
         test: /\.(wav|mp3|ogg)?$/,
         use: [{
-          loader: 'file-loader',
+          loader: "file-loader",
           options: {
-            limit: 8192, 
-            name: 'audios/[name].[ext]?[hash:8]',
-            publicPath:'./'
+            limit: 8192,
+            name: "audios/[name].[ext]?[hash:8]",
+            publicPath: "./"
           }
         }]
       },
@@ -201,24 +241,24 @@ module.exports = {
         // 文件依赖配置项——视频
         test: /\.(ogg|mpeg4|webm)?$/,
         use: [{
-          loader: 'file-loader',
+          loader: "file-loader",
           options: {
-            limit: 8192, 
-            name: 'videos/[name].[ext]?[hash:8]',
-            publicPath:'./'
+            limit: 8192,
+            name: "videos/[name].[ext]?[hash:8]",
+            publicPath: "./"
           }
         }]
       },
       {
         test: /\.(html)?$/,
         use: {
-          loader: 'html-loader',
+          loader: "html-loader",
           options: {
-            // attrs: ['img:src', 'img:data-src'],
+            // attrs: ["img:src", "img:data-src"],
             minimize: false
           }
         }
       }
     ]
   }
-}
+};

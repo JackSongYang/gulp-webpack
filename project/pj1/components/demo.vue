@@ -8,16 +8,16 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        msg: 'webpack-stream'
-      }
-    },
-    mounted () {
-      console.log('demo success')
-    }
+export default {
+  data () {
+    return {
+      msg: 'webpack-stream'
+    };
+  },
+  mounted () {
+    console.log('demo success');
   }
+};
 </script>
 
 <style lang="scss" scoped>
