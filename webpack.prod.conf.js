@@ -1,17 +1,19 @@
 // const path = require("path");
 // const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+// const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const LodashWebpackPlugin = require("lodash-webpack-plugin");
 const InsertHtmlPlugin = require("./public/insert-html-code-plugin");
+const statistics = require("./public/statisticsTemplate");
 
 module.exports = {
   mode: "production",
   // entry: "./testSelf/0303column/js/main.js",
   output: {
-    filename: "build.js"
+    filename: "build.js",
+    globalObject: "this"
     // path:path.resolve(__dirname,"dist")
   },
   plugins: [
@@ -31,10 +33,10 @@ module.exports = {
     new LodashWebpackPlugin(),
     new InsertHtmlPlugin({
       minimize: true,
-      scriptCode: `<script>console.log(window)</script>`,
+      scriptCode: statistics,
       scriptPaths: ['https://code.jquery.com/jquery-1.12.4.min.js']
-    }),
-    new CleanWebpackPlugin()
+    })
+    // new CleanWebpackPlugin()
   ],
   externals: {
     jquery: "jQuery"
@@ -68,7 +70,9 @@ module.exports = {
             loader: "postcss-loader",
             options: {
               plugins: (loader) => [
-                require("postcss-import")({ root: loader.resourcePath }),
+                require("postcss-import")({
+                  root: loader.resourcePath
+                }),
                 require("postcss-preset-env")(),
                 require("cssnano")()
               ]
@@ -97,7 +101,9 @@ module.exports = {
             loader: "postcss-loader",
             options: {
               plugins: (loader) => [
-                require("postcss-import")({ root: loader.resourcePath }),
+                require("postcss-import")({
+                  root: loader.resourcePath
+                }),
                 require("postcss-preset-env")(),
                 require("cssnano")()
               ]
@@ -127,7 +133,9 @@ module.exports = {
             loader: "postcss-loader",
             options: {
               plugins: (loader) => [
-                require("postcss-import")({ root: loader.resourcePath }),
+                require("postcss-import")({
+                  root: loader.resourcePath
+                }),
                 require("postcss-preset-env")(),
                 require("cssnano")()
               ]
@@ -141,7 +149,7 @@ module.exports = {
         loader: "vue-loader"
       },
       {
-        test: /\.js?$/,
+        test: /\.(js|jsx)$/,
         loader: "babel-loader",
         exclude: file => (
           /node_modules/.test(file) &&
@@ -156,7 +164,8 @@ module.exports = {
             options: {
               limit: 8192, // 小于8192字节的图片打包成base 64图片
               name: "images/[name].[hash:8].[ext]",
-              publicPath: "./"
+              publicPath: "./",
+              esModule: false
             }
           },
           {
@@ -193,7 +202,7 @@ module.exports = {
           loader: "file-loader",
           options: {
             limit: 8192,
-            name: "fonts/[name].[ext]?[hash:8]",
+            name: "fonts/[name].[hash:8].[ext]",
             publicPath: "./"
           }
         }]
@@ -205,19 +214,19 @@ module.exports = {
           loader: "file-loader",
           options: {
             limit: 8192,
-            name: "audios/[name].[ext]?[hash:8]",
+            name: "audios/[name].[hash:8].[ext]",
             publicPath: "./"
           }
         }]
       },
       {
         // 文件依赖配置项——视频
-        test: /\.(ogg|mpeg4|webm)?$/,
+        test: /\.(ogg|mpeg4|webm|mp4)?$/,
         use: [{
           loader: "file-loader",
           options: {
             limit: 8192,
-            name: "videos/[name].[ext]?[hash:8]",
+            name: "videos/[name].[hash:8].[ext]",
             publicPath: "./"
           }
         }]

@@ -1,5 +1,10 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+/**
+ * @param minimize {Boolean} 是否压缩（🐕）
+ * @param code {Array} 外链script
+ * @param paths {String} html代码（添加至页面底部）
+ */
 class InsertHtmlCodePlugin {
   constructor (options) {
     this.options = options;
@@ -22,12 +27,14 @@ class InsertHtmlCodePlugin {
           callback(null, htmlCodeData);
         });
       }
-      HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tapAsync('InsertHtmlCodePlugin', (htmlCodeData, callback) => {
-        let newHtmlCode = htmlCodeData.html.replace(/<\/body>|<\/html>/g, '');
-        newHtmlCode += (code + (minimize ? '</body></html>' : '\n</body>\n</html>'));
-        htmlCodeData.html = newHtmlCode;
-        callback(null, htmlCodeData);
-      });
+      if (code) {
+        HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tapAsync('InsertHtmlCodePlugin', (htmlCodeData, callback) => {
+          let newHtmlCode = htmlCodeData.html.replace(/<\/body>|<\/html>/g, '');
+          newHtmlCode += (code + (minimize ? '</body></html>' : '\n</body>\n</html>'));
+          htmlCodeData.html = newHtmlCode;
+          callback(null, htmlCodeData);
+        });
+      }
     });
   }
 }

@@ -1,4 +1,5 @@
 const postcssPlugins = {
-    plugins: []
-}
+  plugins: []
+};
+
 module.exports = postcssPlugins;

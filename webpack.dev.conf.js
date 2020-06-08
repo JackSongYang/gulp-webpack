@@ -1,13 +1,14 @@
 // const path = require("path");
 // const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+// const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 const LodashWebpackPlugin = require("lodash-webpack-plugin");
 const notifier = require("node-notifier");
 const InsertHtmlPlugin = require("./public/insert-html-code-plugin");
+const statistics = require("./public/statisticsTemplate");
 
 module.exports = {
   mode: "development",
@@ -47,10 +48,10 @@ module.exports = {
     }),
     new InsertHtmlPlugin({
       minimize: false,
-      scriptCode: `<script>console.log(window)</script>`,
+      scriptCode: statistics,
       scriptPaths: ['https://code.jquery.com/jquery-1.12.4.min.js']
-    }),
-    new CleanWebpackPlugin()
+    })
+    // new CleanWebpackPlugin()
   ],
   externals: {
     jquery: "jQuery"
@@ -208,7 +209,8 @@ module.exports = {
             options: {
               limit: 8192, // 小于8192字节的图片打包成base 64图片
               name: "images/[name].[hash:8].[ext]",
-              publicPath: "./"
+              publicPath: "./",
+              esModule: false
             }
           }
         ]
@@ -220,7 +222,7 @@ module.exports = {
           loader: "file-loader",
           options: {
             limit: 8192,
-            name: "fonts/[name].[ext]?[hash:8]",
+            name: "fonts/[name].[hash:8].[ext]",
             publicPath: "./"
           }
         }]
@@ -232,19 +234,19 @@ module.exports = {
           loader: "file-loader",
           options: {
             limit: 8192,
-            name: "audios/[name].[ext]?[hash:8]",
+            name: "audios/[name].[hash:8].[ext]",
             publicPath: "./"
           }
         }]
       },
       {
         // 文件依赖配置项——视频
-        test: /\.(ogg|mpeg4|webm)?$/,
+        test: /\.(ogg|mpeg4|webm|mp4)?$/,
         use: [{
           loader: "file-loader",
           options: {
             limit: 8192,
-            name: "videos/[name].[ext]?[hash:8]",
+            name: "videos/[name].[hash:8].[ext]",
             publicPath: "./"
           }
         }]
