@@ -7,9 +7,12 @@
   <script>
     document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
   </script>
+  <style>
+    [v-clock] {display: none;}
+  </style>
 </head>
 <body>
-  <div id="app">
+  <div id="app" v-cloak>
     <demo></demo>
     <img src="./image/startbg.jpg" alt="">
   </div>

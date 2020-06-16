@@ -1,5 +1,5 @@
 // const path = require("path");
-// const webpack = require("webpack");
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 // const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
@@ -17,6 +17,9 @@ module.exports = {
     filename: "build.js",
     globalObject: "this"
     // path:path.resolve(__dirname,"dist")
+  },
+  stats: {
+    children: false // Tells stats whether to add information about the children.
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -49,8 +52,11 @@ module.exports = {
     new InsertHtmlPlugin({
       minimize: false,
       scriptCode: statistics,
-      scriptPaths: ['https://code.jquery.com/jquery-1.12.4.min.js']
-    })
+      scriptPaths: [
+        'https://cdn.bootcdn.net/ajax/libs/jquery/1.8.2/jquery.min.js'
+      ]
+    }),
+    new webpack.HotModuleReplacementPlugin() // webpack内置的热更新插件
     // new CleanWebpackPlugin()
   ],
   externals: {
@@ -59,7 +65,7 @@ module.exports = {
   resolve: {
     extensions: [".vue", ".js", ".scss", ".sass", ".less", ".css", ".json"],
     alias: {
-      vue$: "vue/dist/vue.js"
+      vue$: "vue/dist/vue.esm.js"
     }
   },
   devtool: "inline-source-map",

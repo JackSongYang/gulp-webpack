@@ -1,7 +1,7 @@
 // const path = require("path");
 // const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-// const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const LodashWebpackPlugin = require("lodash-webpack-plugin");
@@ -15,6 +15,9 @@ module.exports = {
     filename: "build.js",
     globalObject: "this"
     // path:path.resolve(__dirname,"dist")
+  },
+  stats: {
+    children: false // Tells stats whether to add information about the children.
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -34,9 +37,11 @@ module.exports = {
     new InsertHtmlPlugin({
       minimize: true,
       scriptCode: statistics,
-      scriptPaths: ['https://code.jquery.com/jquery-1.12.4.min.js']
-    })
-    // new CleanWebpackPlugin()
+      scriptPaths: [
+        'https://cdn.bootcdn.net/ajax/libs/jquery/1.8.2/jquery.min.js'
+      ]
+    }),
+    new CleanWebpackPlugin()
   ],
   externals: {
     jquery: "jQuery"
@@ -169,29 +174,29 @@ module.exports = {
             }
           },
           {
-            loader: "image-webpack-loader",
-            options: {
-              mozjpeg: {
-                progressive: true,
-                quality: 65
-              },
-              // optipng.enabled: false will disable optipng
-              optipng: {
-                enabled: false
-              },
-              pngquant: {
-                quality: [0.65, 0.90],
-                speed: 4
-              },
-              gifsicle: {
-                interlaced: false
-              },
-              // the webp option will enable WEBP
-              webp: {
-                quality: 75
-              },
-              disable: false
-            }
+            loader: "image-webpack-loader"
+            // options: {
+            //   mozjpeg: {
+            //     progressive: true,
+            //     quality: 65
+            //   },
+            //   // optipng.enabled: false will disable optipng
+            //   optipng: {
+            //     enabled: false
+            //   },
+            //   pngquant: {
+            //     quality: [0.65, 0.90],
+            //     speed: 4
+            //   },
+            //   gifsicle: {
+            //     interlaced: false
+            //   },
+            //   // the webp option will enable WEBP
+            //   webp: {
+            //     quality: 75
+            //   },
+            //   disable: false
+            // }
           }
         ]
       },
@@ -237,7 +242,7 @@ module.exports = {
           loader: "html-loader",
           options: {
             // attrs: ["img:src", "img:data-src"],
-            minimize: true
+            minimize: false
           }
         }
       }
