@@ -50,14 +50,6 @@ module.exports = {
     localStorage: true,
     window: true,
     jQuery: true,
-    $: true,
-    destroyLivePlayer: true,
-    destroyH5VodHls: true,
-    vodPlayerObjs: true,
-    createLivePlayer: true,
-    createVodPlayer: true,
-    IScroll: true,
-    GellyClass: true,
-    wx: true
+    $: true
   }
 };
