@@ -1,4 +1,9 @@
+### directions
+
+本项目以 webpack 打包为主，gulp 只提供任务流
+
 ### init
+
 node.js ^v12.16.3
 
 gulp -g ^v4.0.0 （全局升级可能会失败，用 --force 覆盖即可）
@@ -9,7 +14,7 @@ powershell 需开启权限，管理员执行 set-executionpolicy RemoteSigned ,�
 
 若 npm 安装失败请使用 cnpm
 
-### gulp tasks 创建规则
+### gulp tasks
 
 gulpfile.js 文件夹
 
