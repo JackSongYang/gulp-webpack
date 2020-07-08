@@ -10,11 +10,9 @@ const statistics = require("./public/statisticsTemplate");
 
 module.exports = {
   mode: "development",
-  // entry: "./testSelf/0303column/js/main.js",
   output: {
     filename: "build.js",
     globalObject: "this"
-    // path:path.resolve(__dirname,"dist")
   },
   stats: {
     children: false // Tells stats whether to add information about the children.
@@ -40,7 +38,6 @@ module.exports = {
           title: "Webpack error",
           message: severity + ": " + error.name,
           subtitle: error.file || ""
-          // icon: ICON
         });
       },
       // 是否每次编译之间清除控制台
@@ -193,10 +190,8 @@ module.exports = {
         }],
         enforce: "pre", // 编译前检查
         exclude: [/node_modules/] // 不检测的文件
-        // include: [path.resolve(__dirname, "src")], // 指定检查的目录
       },
       {
-        // test: /\.js?$/,
         test: /\.(js|jsx)$/,
         loader: "babel-loader",
         exclude: file => (
@@ -259,7 +254,6 @@ module.exports = {
         use: {
           loader: "html-loader",
           options: {
-            // attrs: ["img:src", "img:data-src"],
             minimize: false
           }
         }
