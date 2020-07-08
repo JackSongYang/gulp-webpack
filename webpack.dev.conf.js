@@ -1,7 +1,5 @@
-// const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-// const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
@@ -57,7 +55,6 @@ module.exports = {
       ]
     }),
     new webpack.HotModuleReplacementPlugin() // webpack内置的热更新插件
-    // new CleanWebpackPlugin()
   ],
   externals: {
     jquery: "jQuery"

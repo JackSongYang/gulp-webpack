@@ -21,6 +21,7 @@ gulpfile.js 文件夹
 - index.js 请勿修改
 - 每个项目类型文件夹（如 project）对应一组 gulp tasks
 - 每组 gulp tasks 命名应与对应项目类文件夹一致
+- 在 index.js 中引入即可
 
 gulpfile.json 文件夹
 
@@ -41,3 +42,8 @@ gulpfile.json 文件夹
      若无特殊要求可省略除 *入口js相对路径* 外其他，如上面可写为 *["./project/pj1/"]* 
   
   3. 请**严格按照**说明书写，否则创建 gulp 任务会**失败**
+
+gulp 任务区分
+
+- dev 代表开发中，不打包项目
+- prod 代表生产

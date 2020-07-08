@@ -1,8 +1,7 @@
-// const gulp = require('gulp');
 const { src, dest } = require('gulp');
 const webpackStream = require('webpack-stream');
 const { webpackEntryOption, openWebpackDevServe } = require('../public/webpackOptionChange');
-const gulpTasks = require('../gulpfile.json/project.json');
+const gulpTasks = require('../gulpfile.json/activity_2020.json');
 
 Object.keys(gulpTasks).forEach(key => {
   const path = gulpTasks[key][0];

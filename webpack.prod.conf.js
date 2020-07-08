@@ -1,10 +1,9 @@
-// const path = require("path");
-// const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const LodashWebpackPlugin = require("lodash-webpack-plugin");
+const UglifyjsWebapckPlugin = require('uglifyjs-webpack-plugin');
 const InsertHtmlPlugin = require("./public/insert-html-code-plugin");
 const statistics = require("./public/statisticsTemplate");
 
@@ -12,12 +11,54 @@ module.exports = {
   mode: "production",
   // entry: "./testSelf/0303column/js/main.js",
   output: {
-    filename: "build.js",
+    filename: "js/[name].build.js",
     globalObject: "this"
     // path:path.resolve(__dirname,"dist")
   },
   stats: {
     children: false // Tells stats whether to add information about the children.
+  },
+  performance: {
+    maxEntrypointSize: 500000, // 入口文件最大限制提示
+    maxAssetSize: 200000 // 输出文件最大限制提示
+  },
+  optimization: {
+    minimizer: [
+      new UglifyjsWebapckPlugin({
+        uglifyOptions: {
+          compress: {
+            // 设置打包时将console语句不打包进去
+            drop_console: true
+          }
+        }
+      })
+    ],
+    splitChunks: {
+      cacheGroups: {
+        // 处理入口chunk,同步的
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          chunks: 'initial',
+          name: 'vendors'
+        },
+        // 处理异步chunk
+        'async-vendors': {
+          test: /[\\/]node_modules[\\/]/,
+          minChunks: 2,
+          chunks: 'async',
+          name: 'async-vendors'
+        },
+        // 处理css
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true
+        }
+      }
+    },
+    // 为每个入口提取出webpack runtime模块
+    runtimeChunk: { name: 'manifest' }
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -32,7 +73,9 @@ module.exports = {
       meta: false
     }),
     new VueLoaderPlugin(),
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].css'
+    }),
     new LodashWebpackPlugin(),
     new InsertHtmlPlugin({
       minimize: true,
@@ -169,7 +212,7 @@ module.exports = {
             options: {
               limit: 8192, // 小于8192字节的图片打包成base 64图片
               name: "images/[name].[hash:8].[ext]",
-              publicPath: "./",
+              publicPath: "../",
               esModule: false
             }
           },
