@@ -4,7 +4,7 @@
 
 ### init
 
-node.js ^v12.16.3
+node.js ^v12.14.0
 
 gulp -g ^v4.0.0 （全局升级可能会失败，用 --force 覆盖即可）
 
@@ -12,13 +12,16 @@ gulp-cli -g ^v2.2.1
 
 powershell 需开启权限，管理员执行 set-executionpolicy RemoteSigned ,然后 y 确认
 
-若 npm 安装失败请使用 cnpm
+若 npm 安装失败请使用 cnpm 或 yarn
 
 ### gulp tasks
 
+IDE任务识别请自行设置
+- vscode效果
+- ![vscode效果](https://raw.githubusercontent.com/JackSongYang/img-store/master/webpack-stream/webpack-stream-vscode.png)
+
 gulpfile.js 文件夹
 
-- index.js 请勿修改
 - 每个项目类型文件夹（如 project）对应一组 gulp tasks
 - 每组 gulp tasks 命名应与对应项目类文件夹一致
 - 在 index.js 中引入即可
