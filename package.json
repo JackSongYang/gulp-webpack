@@ -6,6 +6,9 @@
   "keywords": [],
   "author": "JackSY",
   "license": "ISC",
+  "scripts": {
+    "aduit": "npm audit fix && npm audit fix --force && npm audit"
+  },
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
