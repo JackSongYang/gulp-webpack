@@ -9,11 +9,13 @@ const WebpackDevServer = require('webpack-dev-server');
  * @param {String} main 指定其他入口js文件
  * @param {String} template 制定其他模板文件
  */
-function webpackEntryOption(src, outPath, isProd, main, template) {
+function webpackEntryOption (src, outPath, isProd, main, template) {
   const config = isProd ? require('../webpack.prod.conf.js') : require('../webpack.dev.conf.js');
-  config.entry = `${src}src/${main || 'main'}.js`;
+  // config.entry = `${src}src/${main || 'main'}.js`;
+  config.entry = path.resolve(__dirname, '../' + src + './src/' + (main || 'main') + '.js');
   config.output.path = path.resolve(__dirname, '../' + src + (outPath || 'dist'));
-  config.plugins[0].options.template = `${src + (template || 'index.html')}`;
+  // config.plugins[0].options.template = `${src + (template || 'index.html')}`;
+  config.plugins[0].options.template = path.resolve(__dirname, '../' + src + (template || 'index.html'));
   return config;
 }
 exports.webpackEntryOption = webpackEntryOption;

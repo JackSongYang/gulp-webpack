@@ -210,13 +210,11 @@ module.exports = {
             options: {
               limit: 8192, // 小于8192字节的图片打包成base 64图片
               name: "images/[name].[hash:8].[ext]",
-              publicPath: "../",
+              publicPath: "./",
               esModule: false
             }
           },
-          {
-            loader: "image-webpack-loader"
-          }
+          "image-webpack-loader"
         ]
       },
       {
